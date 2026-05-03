@@ -1,12 +1,65 @@
+# person.py
+
 class Person:
-    def __init__(self, name, str, age: int, email: str):
-        self.name = name
-        self.str = str
-        self.age = age
-        self.email = email
+    """
+    Класс Person демонстрирует принцип инкапсуляции в ООП.
+    Инкапсуляция — сокрытие внутренних данных и предоставление доступа через методы.
+    """
 
+    def __init__(self, name: str, age: int, email: str):
+        """
+        Конструктор класса. Вызывается при создании объекта.
+        :param name: имя человека (строка)
+        :param age: возраст человека (целое число)
+        :param email: email человека (строка)
+        """
+        self.__name = name      # Приватное поле: имя (недоступно извне напрямую)
+        self.__age = age       # Приватное поле: возраст (недоступно извне напрямую)
+        self.__email = email   # Приватное поле: email (недоступно извне напрямую)
 
-    def get_name(self) -> str:#Геттер для получения имени. Возвращает приватное поле __name
+    def get_name(self) -> str:
+        """Геттер для получения имени. Возвращает приватное поле __name."""
         return self.__name
 
-    def set_name(self, ):
+    def set_name(self, name: str) -> None:
+        """
+        Сеттер для установки имени. Проверяет, что имя не пустое.
+        :param name: новое имя (строка)
+        """
+        if not name:  # Проверяем, что строка не пустая
+            raise ValueError("Имя не может быть пустым")  # Выбрасываем ошибку, если условие нарушено
+        self.__name = name  # Устанавливаем новое значение
+
+    def get_age(self) -> int:
+        """Геттер для получения возраста. Возвращает приватное поле __age."""
+        return self.__age
+
+    def set_age(self, age: int) -> None:
+        """
+        Сеттер для установки возраста. Проверяет, что возраст в диапазоне 0–120.
+        :param age: новый возраст (целое число)
+        """
+        if age < 0 or age > 120:  # Проверяем допустимый диапазон возраста
+            raise ValueError("Возраст должен быть от 0 до 120 лет")  # Выбрасываем ошибку при нарушении
+        self.__age = age  # Устанавливаем новое значение
+
+
+    def get_email(self) -> str:
+        """Геттер для получения email. Возвращает приватное поле __email."""
+        return self.__email
+
+    def set_email(self, email: str) -> None:
+        """
+        Сеттер для установки email. Проверяет формат email (наличие @).
+        :param email: новый email (строка)
+        """
+        if "@" not in email:  # Простая проверка формата email
+            raise ValueError("Некорректный формат email")  # Ошибка, если @ отсутствует
+        self.__email = email  # Устанавливаем новое значение
+
+    def display_info(self) -> str:
+        """
+        Метод для отображения информации о человеке.
+        Возвращает строку с именем, возрастом и email.
+        """
+        return f"Имя: {self.__name}, Возраст: {self.__age}, Email: {self.__email}"
